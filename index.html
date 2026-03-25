@@ -578,12 +578,11 @@
       letter-spacing: 0.02em;
     }
 
-    /* scroll hint — centered at bottom */
+    /* scroll hint — far right, prominent */
     .scroll-hint {
       position: absolute;
       bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
+      right: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1900,8 +1899,15 @@
     @media (max-width:700px) {
       .hero-sticky {
         justify-content: flex-start;
-        padding: 90px 20px 48px;
+        padding: 115px 20px 48px;
         overflow-y: auto;
+      }
+
+      .scroll-hint {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        bottom: 56px;
       }
 
       .hero-features {
