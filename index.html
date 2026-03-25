@@ -1995,6 +1995,126 @@
     .cta-form { max-width: 520px; }
     .cta-input { padding: 18px 20px; }
     .cta-submit { padding: 18px 34px; font-size: 0.78rem; }
+
+    /* ── FUNNEL OVERLAY ── */
+    #funnel-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(13,11,9,0.88); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    #funnel-overlay.open { opacity: 1; pointer-events: all; }
+    .fcard {
+      background: var(--ink2); border: 1px solid var(--bmd);
+      max-width: 520px; width: 100%; padding: 52px 48px;
+      position: relative; overflow: hidden;
+    }
+    .fcard::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .fstage { display: none; }
+    .fstage.active { display: block; }
+    .fs-eyebrow {
+      font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px; display: block;
+    }
+    .fs-spot {
+      font-family: var(--f-d); font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 300; color: rgba(250,250,248,0.95); line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .fs-spot strong { color: var(--gold); }
+    .fs-sub {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.65;
+      margin-bottom: 32px;
+    }
+    .fs-label {
+      font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(250,250,248,0.45); display: block; margin-bottom: 10px;
+    }
+    .fs-select {
+      width: 100%; padding: 14px 16px; background: var(--surface);
+      border: 1px solid var(--bmd); color: var(--ink); font-size: 0.82rem;
+      font-family: var(--f-b); margin-bottom: 28px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .fs-select:focus { border-color: var(--gold); }
+    .fs-btn-row { display: flex; flex-direction: column; gap: 12px; }
+    .fs-btn {
+      padding: 16px 32px; background: var(--gold); border: none;
+      color: #fff; font-family: var(--f-b); font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s, transform 0.15s; width: 100%;
+    }
+    .fs-btn:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .fs-btn:disabled { opacity: 0.5; pointer-events: none; }
+    .fs-skip {
+      background: none; border: none; color: var(--muted); font-size: 0.72rem;
+      cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+      font-family: var(--f-b); padding: 4px 0; transition: color 0.2s;
+    }
+    .fs-skip:hover { color: var(--ink); }
+    .fs-opts {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;
+    }
+    .fs-opt-btn {
+      padding: 11px 10px; background: var(--surface); border: 1px solid var(--bmd);
+      color: var(--muted); font-size: 0.68rem; letter-spacing: 0.06em;
+      text-transform: uppercase; font-family: var(--f-b); cursor: pointer;
+      transition: all 0.15s; text-align: center;
+    }
+    .fs-opt-btn:hover, .fs-opt-btn.sel { background: var(--gold-dim); border-color: var(--gold); color: var(--ink); }
+    .fs-textarea {
+      width: 100%; padding: 14px 16px; background: var(--surface);
+      border: 1px solid var(--bmd); color: var(--ink); font-size: 0.82rem;
+      font-family: var(--f-b); resize: none; height: 88px; outline: none;
+      margin-bottom: 28px; transition: border-color 0.2s; box-sizing: border-box;
+    }
+    .fs-textarea:focus { border-color: var(--gold); }
+    .fs-ref-box {
+      display: flex; gap: 0; margin-bottom: 24px; border: 1px solid var(--gold);
+    }
+    .fs-ref-input {
+      flex: 1; padding: 13px 14px; background: var(--surface); border: none;
+      color: var(--gold); font-size: 0.72rem; font-family: monospace; outline: none;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .fs-copy-btn {
+      padding: 13px 20px; background: var(--gold); border: none;
+      color: #fff; font-size: 0.65rem; font-family: var(--f-b); font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+      white-space: nowrap; transition: background 0.15s; flex-shrink: 0;
+    }
+    .fs-copy-btn:hover { background: var(--gold-lt); }
+    .fs-share-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;
+    }
+    .fs-share-btn {
+      padding: 11px; background: var(--surface); border: 1px solid var(--bmd);
+      color: var(--muted); font-size: 0.65rem; letter-spacing: 0.08em;
+      text-transform: uppercase; font-family: var(--f-b); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      transition: all 0.15s; text-decoration: none;
+    }
+    .fs-share-btn:hover { border-color: var(--gold); color: var(--ink); }
+    .fs-perks {
+      font-size: 0.65rem; color: var(--muted); letter-spacing: 0.06em;
+      text-align: center; margin-bottom: 28px; line-height: 1.7;
+    }
+    .fs-perks strong { color: var(--gold); }
+    .fs-close {
+      position: absolute; top: 18px; right: 20px; background: none; border: none;
+      color: var(--muted); font-size: 1.2rem; cursor: pointer; padding: 4px 8px;
+      line-height: 1; transition: color 0.2s;
+    }
+    .fs-close:hover { color: var(--ink); }
+    @media (max-width: 600px) {
+      .fcard { padding: 36px 24px; }
+      .fs-opts { grid-template-columns: 1fr; }
+      .fs-share-row { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
@@ -2027,15 +2147,15 @@
           200+ investors &amp; homeowners already on the waitlist
         </div>
         <div class="hero-cta-form">
-          <input class="hero-cta-input" type="email" placeholder="Enter your email address" id="hero-email">
-          <button class="hero-cta-btn" onclick="handleHeroCTA()">Get Early Access</button>
+          <!-- Honeypot — hidden from humans, bots fill it -->
+          <input type="text" name="website" id="hero-hp" style="display:none" tabindex="-1" autocomplete="off">
+          <input class="hero-cta-input" type="email" placeholder="Your professional email" id="hero-email">
+          <button class="hero-cta-btn" onclick="handleHeroCTA()">Claim My Spot</button>
         </div>
         <div class="hero-cta-trust">
-          <span>No credit card required</span>
+          <span>Limited to 200 professionals in Metro Atlanta</span>
           <span class="hero-trust-sep">·</span>
-          <span>First cohort: 200 spots</span>
-          <span class="hero-trust-sep">·</span>
-          <span>Launching in Metro Atlanta</span>
+          <span>No credit card</span>
         </div>
 
       </div>
@@ -2641,8 +2761,9 @@
     </div>
     <div class="mid-cta-right">
       <div class="mid-cta-form">
-        <input class="mid-cta-input" type="email" placeholder="Your email address" id="mid-email">
-        <button class="mid-cta-submit" onclick="handleMidCTA()">Secure My Spot</button>
+        <input type="text" name="website" id="mid-hp" style="display:none" tabindex="-1" autocomplete="off">
+        <input class="mid-cta-input" type="email" placeholder="Your professional email" id="mid-email">
+        <button class="mid-cta-submit" onclick="handleMidCTA()">Claim My Spot</button>
       </div>
       <span class="mid-cta-note">No credit card · Invites sent in monthly cohorts</span>
       <div class="mid-scarcity">
@@ -2906,8 +3027,9 @@
     <h2 class="cta-h2">The system that grows<br>with every <em>deal you close.</em></h2>
     <p class="cta-p">Join the waitlist for early access. First investors shape the product — and lock in lifetime pricing before public launch.</p>
     <div class="cta-form">
-      <input class="cta-input" type="email" placeholder="Your work email address" id="cta-email">
-      <button class="cta-submit" onclick="handleCTA()">Get Early Access →</button>
+      <input type="text" name="website" id="final-hp" style="display:none" tabindex="-1" autocomplete="off">
+      <input class="cta-input" type="email" placeholder="Your professional email" id="cta-email">
+      <button class="cta-submit" onclick="handleCTA()">Claim My Spot →</button>
     </div>
     <p class="cta-note">No credit card required · Private beta launching in Metro Atlanta · 200 spots total</p>
   </section>
@@ -3078,21 +3200,131 @@
       panel3.classList.toggle('visible', ep >= Z.t3[0]);
     }
 
-    // CTA HANDLERS
+    // ── FUNNEL STATE ──────────────────────────────────────────────────────────
+    let _fEmail = '', _fRefUrl = '', _fRefCode = '', _fDeals = '';
+
+    // ── SUBMIT EMAIL → open funnel ────────────────────────────────────────────
     function submitEmail(emailId, btnEl) {
       const email = document.getElementById(emailId).value.trim();
-      if (!email || !email.includes('@')) {
-        document.getElementById(emailId).style.borderColor = '#dc2626';
-        setTimeout(() => document.getElementById(emailId).style.borderColor = '', 1200);
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRe.test(email)) {
+        const inp = document.getElementById(emailId);
+        inp.style.borderColor = '#dc2626';
+        setTimeout(() => inp.style.borderColor = '', 1400);
         return;
       }
-      btnEl.textContent = "You're on the list!";
-      btnEl.style.background = '#16a34a';
-      btnEl.style.pointerEvents = 'none';
+      _fEmail = email;
+      btnEl.textContent = 'Joining…';
+      btnEl.disabled = true;
+
+      // Read referral code from URL ?ref= and honeypot value
+      const refParam = new URLSearchParams(location.search).get('ref') || '';
+      const hpEl = document.getElementById(emailId.replace('email', 'hp').replace('cta', 'final'));
+      const honeypot = hpEl ? hpEl.value : '';
+
+      fetch('/api/waitlist', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email, referredBy: refParam, website: honeypot }),
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) {
+            btnEl.textContent = 'Try Again';
+            btnEl.disabled = false;
+            return;
+          }
+          _fRefUrl  = data.referralUrl  || location.origin;
+          _fRefCode = data.referralCode || '';
+          openFunnel(data.spotNumber || 1);
+        })
+        .catch(() => {
+          // If API isn't configured yet, still open funnel for demo
+          _fRefUrl  = location.origin;
+          _fRefCode = 'DEMO';
+          openFunnel(47);
+        });
     }
+
     function handleHeroCTA() { submitEmail('hero-email', document.querySelector('.hero-cta-btn')); }
-    function handleMidCTA() { submitEmail('mid-email', document.querySelector('.mid-cta-submit')); }
-    function handleCTA() { submitEmail('cta-email', document.querySelector('.cta-submit')); }
+    function handleMidCTA()  { submitEmail('mid-email',  document.querySelector('.mid-cta-submit')); }
+    function handleCTA()     { submitEmail('cta-email',  document.querySelector('.cta-submit')); }
+
+    // ── FUNNEL OVERLAY CONTROLS ───────────────────────────────────────────────
+    function openFunnel(spotNum) {
+      document.getElementById('fs-spot-num').textContent = spotNum;
+      showFStage(2);
+      document.getElementById('funnel-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFunnel() {
+      document.getElementById('funnel-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function showFStage(n) {
+      document.querySelectorAll('.fstage').forEach(el => el.classList.remove('active'));
+      document.getElementById('fs-' + n).classList.add('active');
+    }
+
+    function advanceFunnel(toStage) {
+      if (toStage === 3) {
+        // Save role before advancing
+        const role = document.getElementById('fs-role').value;
+        if (!role) {
+          document.getElementById('fs-role').style.borderColor = '#b8921f';
+          setTimeout(() => document.getElementById('fs-role').style.borderColor = '', 1200);
+          return;
+        }
+        // Patch role into Supabase silently (fire & forget)
+        fetch('/api/waitlist', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email: _fEmail, role, website: '' }),
+        }).catch(() => {});
+      }
+      if (toStage === 4) {
+        document.getElementById('fs-ref-input').value = _fRefUrl;
+      }
+      showFStage(toStage);
+    }
+
+    // Stage 3 deal-count buttons
+    function selectDeals(val, el) {
+      document.querySelectorAll('.fs-opt-btn').forEach(b => b.classList.remove('sel'));
+      el.classList.add('sel');
+      _fDeals = val;
+    }
+
+    function submitAdvisor() {
+      const bottleneck = document.getElementById('fs-bottleneck').value.trim();
+      const btn = document.querySelector('#fs-3 .fs-btn');
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+      fetch('/api/waitlist', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email: _fEmail, deals: _fDeals, bottleneck, website: '' }),
+      })
+        .catch(() => {})
+        .finally(() => advanceFunnel(4));
+    }
+
+    function copyRef() {
+      const inp = document.getElementById('fs-ref-input');
+      navigator.clipboard.writeText(inp.value).catch(() => {
+        inp.select(); document.execCommand('copy');
+      });
+      const btn = document.querySelector('.fs-copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 1800);
+    }
+
+    // Close on overlay backdrop click
+    document.getElementById('funnel-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeFunnel();
+    });
 
     // RAF SCROLL LOOP
     let lastScrollY = -1;
@@ -3112,6 +3344,94 @@
     // INIT
     resize();
     onScroll();
+  </script>
+
+  <!-- ── FUNNEL OVERLAY ── -->
+  <div id="funnel-overlay">
+    <div class="fcard">
+      <button class="fs-close" onclick="closeFunnel()" aria-label="Close">&times;</button>
+
+      <!-- Stage 2: Confirmation + identity -->
+      <div class="fstage" id="fs-2">
+        <span class="fs-eyebrow">Project Prep Pro &nbsp;·&nbsp; Metro Atlanta</span>
+        <div class="fs-spot">You're in.<br><strong>Spot #<span id="fs-spot-num">47</span> secured.</strong></div>
+        <p class="fs-sub">You'll get an invite the moment your cohort opens.<br>One quick question — takes 15 seconds.</p>
+        <label class="fs-label" for="fs-role">Which best describes you?</label>
+        <select class="fs-select" id="fs-role">
+          <option value="">Select your role…</option>
+          <option value="wholesaler">Wholesaler</option>
+          <option value="flipper">Fix &amp; Flipper</option>
+          <option value="developer">Developer / Builder</option>
+          <option value="investor">Buy &amp; Hold Investor</option>
+          <option value="agent">Real Estate Agent / Broker</option>
+          <option value="lender">Hard Money Lender</option>
+          <option value="other">Other</option>
+        </select>
+        <div class="fs-btn-row">
+          <button class="fs-btn" onclick="advanceFunnel(3)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Stage 3: Shape the product / Advisor application -->
+      <div class="fstage" id="fs-3">
+        <span class="fs-eyebrow">Optional &nbsp;·&nbsp; 2 more questions</span>
+        <div class="fs-spot" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:10px">Want to directly influence what gets built?</div>
+        <p class="fs-sub">We're selecting 20 advisors from the first cohort to give direct feedback. Answer two questions to be considered.</p>
+        <label class="fs-label">How many deals do you close per year?</label>
+        <div class="fs-opts">
+          <button class="fs-opt-btn" onclick="selectDeals('1-5', this)">1 – 5</button>
+          <button class="fs-opt-btn" onclick="selectDeals('6-15', this)">6 – 15</button>
+          <button class="fs-opt-btn" onclick="selectDeals('16-30', this)">16 – 30</button>
+          <button class="fs-opt-btn" onclick="selectDeals('31+', this)">31 +</button>
+        </div>
+        <label class="fs-label" for="fs-bottleneck">What's your biggest bottleneck right now?</label>
+        <textarea class="fs-textarea" id="fs-bottleneck" placeholder="E.g. tracking multiple contractors, deal analysis takes too long…"></textarea>
+        <div class="fs-btn-row">
+          <button class="fs-btn" onclick="submitAdvisor()">Submit &amp; Apply for Advisor Access →</button>
+          <button class="fs-skip" onclick="advanceFunnel(4)">Skip — I'm already on the list</button>
+        </div>
+      </div>
+
+      <!-- Stage 4: Social amplifier -->
+      <div class="fstage" id="fs-4">
+        <span class="fs-eyebrow">You're confirmed</span>
+        <div class="fs-spot" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:10px">Move up the list.</div>
+        <p class="fs-sub">Share your link. Every professional who signs up through you moves you closer to the front of the first cohort.</p>
+        <div class="fs-ref-box">
+          <input class="fs-ref-input" id="fs-ref-input" readonly>
+          <button class="fs-copy-btn" onclick="copyRef()">Copy</button>
+        </div>
+        <div class="fs-share-row">
+          <a class="fs-share-btn" id="fs-li-share" href="#" target="_blank" rel="noopener" onclick="openLinkedIn()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            Share on LinkedIn
+          </a>
+          <a class="fs-share-btn" id="fs-sms-share" href="#" onclick="openSMS()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Text a Contact
+          </a>
+        </div>
+        <p class="fs-perks"><strong>2 referrals</strong> = Priority Access &nbsp;·&nbsp; <strong>5 referrals</strong> = Founding Member status</p>
+        <div class="fs-btn-row">
+          <button class="fs-btn" onclick="closeFunnel()">Done — Take Me Back</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Share helpers (need _fRefUrl set before funnel opens)
+    function openLinkedIn() {
+      const url = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(_fRefUrl);
+      window.open(url, '_blank', 'width=600,height=500');
+      return false;
+    }
+    function openSMS() {
+      const msg = encodeURIComponent('Joining Project Prep Pro — looks like a solid platform for real estate pros. Use my link to get early access: ' + _fRefUrl);
+      window.open('sms:?body=' + msg);
+      return false;
+    }
   </script>
 </body>
 
