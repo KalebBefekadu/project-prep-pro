@@ -1432,6 +1432,52 @@
       line-height: 1.6;
     }
 
+    /* ── PORTFOLIO SCROLL-REVEAL ── */
+    .pb-text {
+      opacity: 0;
+      transform: translateX(-32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .pb-text.in-view {
+      opacity: 1;
+      transform: none;
+    }
+    .pb-feat {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease var(--d, 0s), transform 0.55s ease var(--d, 0s), background 0.2s;
+    }
+    .pb-feat.in-view {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── ONE-PLATFORM JOIN BUTTON ── */
+    .one-platform-btn {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 12px 40px;
+      background: var(--gold);
+      border: none;
+      color: #fff;
+      font-family: var(--f-b);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.5s ease 0.35s, transform 0.5s ease 0.35s, background 0.2s;
+    }
+    .one-platform.visible .one-platform-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .one-platform-btn:hover {
+      background: var(--gold-lt);
+    }
+
     /* frag tools rule within portfolio */
     .pb-divider {
       border: none;
@@ -3054,6 +3100,7 @@
         <div class="one-platform" id="one-platform">
           <div class="one-platform-name">Project Prep Pro</div>
           <div class="one-platform-sub">One unified operating system — every stage, every decision</div>
+          <button class="one-platform-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Join the Waitlist →</button>
         </div>
       </div>
     </div>
@@ -3391,6 +3438,19 @@
     }, { passive: true });
 
     window.addEventListener('resize', resize);
+
+    // PORTFOLIO-BAND SCROLL REVEAL
+    const pbReveal = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); pbReveal.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    const pbText = document.querySelector('.pb-text');
+    if (pbText) pbReveal.observe(pbText);
+    document.querySelectorAll('.pb-feat').forEach((el, i) => {
+      el.style.setProperty('--d', (i * 0.09) + 's');
+      pbReveal.observe(el);
+    });
 
     // INIT
     resize();
