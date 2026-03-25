@@ -30,31 +30,64 @@ module.exports = async function handler(req, res) {
   // Deterministic-ish referral code: first 5 chars of email + 4 random alphanum
   const prefix = email.split('@')[0].replace(/[^a-z0-9]/gi, '').toUpperCase().slice(0, 5);
   const suffix = Math.random().toString(36).substr(2, 4).toUpperCase();
-  const refCode = prefix + suffix;
+  let refCode = prefix + suffix;
 
   let spotNumber = 1;
+  let isNewUser = true;
 
   // ── Supabase insert ──────────────────────────────────────────────────────────
   if (SUPABASE_URL && SUPABASE_KEY) {
     try {
-      // Upsert — if email already exists, update fields but keep original referral_code
-      const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
-        method:  'POST',
+      // Check if user already exists
+      const getRes = await fetch(`${SUPABASE_URL}/rest/v1/waitlist?email=eq.${encodeURIComponent(email)}`, {
         headers: {
-          'Content-Type': 'application/json',
-          'apikey':        SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`,
-          'Prefer':        'return=representation,resolution=merge-duplicates',
-        },
-        body: JSON.stringify({
-          email,
-          role:          role        || null,
-          deals:         deals       || null,
-          bottleneck:    bottleneck  || null,
-          referral_code: refCode,
-          referred_by:   referredBy  || null,
-        }),
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        }
       });
+      const existing = await getRes.json();
+
+      if (existing && existing.length > 0) {
+        isNewUser = false;
+        refCode = existing[0].referral_code || refCode; // keep original referral code
+        
+        // Patch only defined fields so we don't overwrite with nulls
+        const updatePayload = {};
+        if (role) updatePayload.role = role;
+        if (deals) updatePayload.deals = deals;
+        if (bottleneck) updatePayload.bottleneck = bottleneck;
+        
+        if (Object.keys(updatePayload).length > 0) {
+          await fetch(`${SUPABASE_URL}/rest/v1/waitlist?email=eq.${encodeURIComponent(email)}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+            },
+            body: JSON.stringify(updatePayload),
+          });
+        }
+      } else {
+        // Insert new user
+        await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+          method:  'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey':        SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Prefer':        'return=minimal',
+          },
+          body: JSON.stringify({
+            email,
+            role:          role        || null,
+            deals:         deals       || null,
+            bottleneck:    bottleneck  || null,
+            referral_code: refCode,
+            referred_by:   referredBy  || null,
+          }),
+        });
+      }
 
       // Get total count for spot number
       const countRes = await fetch(
@@ -79,7 +112,7 @@ module.exports = async function handler(req, res) {
   }
 
   // ── Resend confirmation email ────────────────────────────────────────────────
-  if (RESEND_KEY) {
+  if (RESEND_KEY && isNewUser) {
     try {
       await fetch('https://api.resend.com/emails', {
         method:  'POST',
