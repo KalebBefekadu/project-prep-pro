@@ -186,7 +186,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 24px;
+      padding: 0 24px 200px;
       overflow: hidden;
     }
 
@@ -239,7 +239,7 @@
       letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 30px;
+      margin-bottom: 18px;
       padding: 7px 20px;
       border: 1px solid rgba(184, 146, 31, 0.28);
       background: rgba(184, 146, 31, 0.07);
@@ -271,12 +271,12 @@
 
     .hero-h1 {
       font-family: var(--f-d);
-      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-size: clamp(1.9rem, 5vw, 4.6rem);
       font-weight: 300;
-      line-height: 0.94;
+      line-height: 1.05;
       letter-spacing: -0.01em;
-      margin-bottom: 28px;
-      max-width: 980px;
+      margin-bottom: 20px;
+      max-width: 720px;
       position: relative;
       color: var(--ink);
     }
@@ -287,11 +287,11 @@
     }
 
     .hero-sub {
-      font-size: clamp(0.88rem, 1.6vw, 1.05rem);
+      font-size: clamp(0.82rem, 1.4vw, 0.96rem);
       color: var(--muted);
-      max-width: 560px;
-      line-height: 1.84;
-      margin-bottom: 48px;
+      max-width: 520px;
+      line-height: 1.75;
+      margin-bottom: 28px;
       position: relative;
     }
 
@@ -1853,12 +1853,21 @@
         padding: 40px 28px;
       }
 
+      /* tablet hero: features in flow, switch to top-aligned layout */
+      .hero-sticky {
+        justify-content: flex-start;
+        padding: 100px 24px 60px;
+        overflow-y: auto;
+      }
+
       .hero-features {
         flex-wrap: wrap;
         white-space: normal;
         position: static;
-        margin-top: 40px;
+        margin-top: 32px;
         transform: none;
+        width: 100%;
+        justify-content: center;
       }
 
       .hero-stats-wrap {
@@ -1868,7 +1877,19 @@
       }
     }
 
+    /* short desktop viewports — hide features to prevent overlap */
+    @media (max-height: 680px) and (min-width: 901px) {
+      .hero-features { display: none; }
+      .hero-sticky { padding-bottom: 60px; }
+    }
+
     @media (max-width:700px) {
+      .hero-sticky {
+        justify-content: flex-start;
+        padding: 90px 20px 48px;
+        overflow-y: auto;
+      }
+
       .hero-features {
         display: none;
       }
