@@ -1,3 +1,6 @@
 .DS_Store
 3D website asset generator/
 .claude/
+.vercel
+
+frames/
