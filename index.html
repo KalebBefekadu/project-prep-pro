@@ -186,7 +186,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 24px 200px;
+      padding: 0 24px 60px;
       overflow: hidden;
     }
 
@@ -1853,6 +1853,21 @@
         padding: 40px 28px;
       }
 
+      .who-cta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .who-cta-text {
+        max-width: 100%;
+      }
+
+      .who-cta-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
       /* tablet hero: features in flow, switch to top-aligned layout */
       .hero-sticky {
         justify-content: flex-start;
@@ -2013,9 +2028,16 @@
     }
 
     /* ── FINAL CTA — larger form + button ── */
-    .cta-form { max-width: 520px; }
-    .cta-input { padding: 18px 20px; }
-    .cta-submit { padding: 18px 34px; font-size: 0.78rem; }
+    .cta-form { max-width: 520px; margin: 0 auto; display: flex; gap: 8px; }
+    .cta-input { padding: 18px 20px; flex: 1; border: 1px solid var(--border); background: var(--surface); color: var(--ink); outline: none; transition: border-color 0.2s; font-family: var(--f-b); }
+    .cta-input:focus { border-color: var(--gold); }
+    .cta-submit { padding: 18px 34px; font-size: 0.78rem; background: var(--gold); color: #fff; border: none; font-family: var(--f-b); font-weight: 700; text-transform: uppercase; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+    .cta-submit:hover { background: var(--gold-lt); }
+
+    @media (max-width: 600px) {
+      .cta-form { flex-direction: column; gap: 12px; }
+      .cta-submit { width: 100%; justify-content: center; }
+    }
 
     /* ── FUNNEL OVERLAY ── */
     #funnel-overlay {
@@ -3066,7 +3088,6 @@
       <li><a href="#lifecycle">Platform</a></li>
       <li><a href="#service-hub">Services</a></li>
       <li><a href="#final-cta">Early Access</a></li>
-      <li><a href="#">Privacy</a></li>
     </ul>
     <div class="foot-copy">© 2025 Project Prep Pro. All rights reserved.</div>
   </footer>
