@@ -121,7 +121,7 @@ module.exports = async function handler(req, res) {
           'Authorization': `Bearer ${RESEND_KEY}`,
         },
         body: JSON.stringify({
-          from:    'Project Prep Pro <waitlist@projectpreppro.com>',
+          from:    'Project Prep Pro <onboarding@resend.dev>',
           to:      [email],
           subject: `You're in — Spot #${spotNumber} secured`,
           html: `
