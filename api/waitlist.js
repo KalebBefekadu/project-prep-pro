@@ -112,9 +112,10 @@ module.exports = async function handler(req, res) {
   }
 
   // ── Resend confirmation email ────────────────────────────────────────────────
-  if (RESEND_KEY && isNewUser) {
+  console.log('Resend check — key present:', !!RESEND_KEY, '| isNewUser:', isNewUser);
+  if (RESEND_KEY) {
     try {
-      await fetch('https://api.resend.com/emails', {
+      const resendRes = await fetch('https://api.resend.com/emails', {
         method:  'POST',
         headers: {
           'Content-Type':  'application/json',
@@ -142,6 +143,8 @@ module.exports = async function handler(req, res) {
           `,
         }),
       });
+      const resendBody = await resendRes.json();
+      console.log('Resend response:', resendRes.status, JSON.stringify(resendBody));
     } catch (e) {
       console.error('Resend error:', e);
     }
