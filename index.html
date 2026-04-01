@@ -20,7 +20,6 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Project Prep Pro","description":"The complete real estate investment operating system — AI deal underwriting, 3D design prototyping, intelligent contractor bidding, construction management, and post-sale records in one platform.","applicationCategory":"BusinessApplication","operatingSystem":"Web","featureList":["AI deal underwriting","3D field intelligence and BIM","AI design prototyping","Smart contractor bidding with magic links","Construction management","Permit management","Sale marketing tools","Post-sale institutional records"]}
   </script>
-  <link rel="preload" href="animation.mp4" as="video" type="video/mp4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -65,6 +64,21 @@
       font-family: var(--f-b);
       -webkit-font-smoothing: antialiased;
     }
+
+    /* ── LOADER ── */
+    #loader {
+      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 28px;
+      transition: opacity 0.9s ease, visibility 0.9s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .ld-brand { font-family: var(--f-d); font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 300; letter-spacing: 0.18em; color: var(--ink); }
+    .ld-brand span { color: var(--gold); }
+    .ld-sub { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); }
+    .ld-track { width: min(280px,72vw); height: 1px; background: var(--bmd); overflow: hidden; }
+    .ld-fill { height: 100%; width: 0%; background: var(--gold); transition: width 0.08s linear; }
+    .ld-pct { font-family: var(--f-m); font-size: 0.6rem; color: var(--muted-lt); letter-spacing: 0.12em; }
 
     /* ── STAGE TIMELINE ── */
     #stage-timeline {
@@ -2215,6 +2229,14 @@
 
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+  <div class="ld-brand">Project <span>Prep</span> Pro</div>
+  <div class="ld-sub">Preparing your experience</div>
+  <div class="ld-track"><div class="ld-fill" id="ld-fill"></div></div>
+  <div class="ld-pct" id="ld-pct">0%</div>
+</div>
+
   <!-- ══════════════════ HERO ══════════════════ -->
   <section id="hero">
     <div class="hero-sticky">
@@ -3147,11 +3169,15 @@
 
   <script>
     // CONFIG
-    const TOTAL_FRAMES = 363;
-    const FPS = 30;
+    const TOTAL = 363;
+    const SEQS = [
+      { folder: 'Blueprint to Framing',        start: 1,   end: 121 },
+      { folder: 'Framing to mechanical',        start: 122, end: 242 },
+      { folder: 'Mechanicals to Final Product', start: 243, end: 363 },
+    ];
 
     const Z = {
-      a1: [0, 0.1667],
+      a1: [0,      0.1667],
       t1: [0.1667, 0.3333],
       a2: [0.3333, 0.5000],
       t2: [0.5000, 0.6667],
@@ -3162,6 +3188,9 @@
     // DOM
     const canvas = document.getElementById('main-canvas');
     const ctx = canvas.getContext('2d');
+    const ldFill = document.getElementById('ld-fill');
+    const ldPct = document.getElementById('ld-pct');
+    const loaderEl = document.getElementById('loader');
     const scrollEng = document.getElementById('scroll-engine');
     const fragToolsEl = document.getElementById('frag-tools');
     const slFrom = document.getElementById('sl-from');
@@ -3175,22 +3204,24 @@
     const appCards = [0, 1, 2, 3, 4, 5].map(i => document.getElementById('app-' + i));
     const stageTimeline = document.getElementById('stage-timeline');
     const stageEls = [0, 1, 2, 3, 4, 5, 6].map(i => document.getElementById('st-' + i));
-    // Stage scroll thresholds (7 stages mapped across 6 zones)
     const ST = [0, 0.1667, 0.3333, 0.5000, 0.6667, 0.8333, 0.9167, 1.0001];
 
-    // VIDEO ENGINE — single 6MB MP4 replaces 363 individual JPGs (115MB)
-    const video = document.createElement('video');
-    video.src = 'animation.mp4';
-    video.preload = 'auto';
-    video.muted = true;
-    video.playsInline = true;
-
-    // STATE
+    // IMAGE SEQUENCE ENGINE
+    const imgs = new Array(TOTAL + 1);
+    let loaded = 0;
+    let errors = 0;
     let ready = false;
+    let firstFrameShown = false;
     let curFrame = 1;
     let activeStage = -1;
     let logicalW = window.innerWidth;
     let logicalH = window.innerHeight;
+
+    function framePath(n) {
+      const seq = SEQS.find(s => n >= s.start && n <= s.end);
+      const folder = seq.folder.replace(/ /g, '%20');
+      return 'frames/' + folder + '/frame_' + String(n).padStart(4, '0') + '.jpg';
+    }
 
     // CANVAS RESIZE (DPR-aware)
     function resize() {
@@ -3202,34 +3233,57 @@
       canvas.style.width = logicalW + 'px';
       canvas.style.height = logicalH + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawVideoFrame();
+      if (curFrame > 0) render(curFrame);
     }
 
-    // DRAW & RENDER
-    function drawVideoFrame() {
-      if (video.readyState < 2) return;
+    // RENDER
+    function render(idx) {
+      idx = Math.max(1, Math.min(TOTAL, idx));
+      const img = imgs[idx];
+      if (!img || !img.complete || img.naturalWidth === 0) return;
+      curFrame = idx;
       const cW = logicalW, cH = logicalH;
-      const iW = video.videoWidth, iH = video.videoHeight;
-      if (!iW || !iH) return;
+      const iW = img.naturalWidth, iH = img.naturalHeight;
       const s = Math.max(cW / iW, cH / iH);
       const dW = iW * s, dH = iH * s;
       ctx.clearRect(0, 0, cW, cH);
-      ctx.drawImage(video, (cW - dW) / 2, (cH - dH) / 2, dW, dH);
+      ctx.drawImage(img, (cW - dW) / 2, (cH - dH) / 2, dW, dH);
     }
 
-    function render(frameIdx) {
-      frameIdx = Math.max(1, Math.min(TOTAL_FRAMES, frameIdx));
-      curFrame = frameIdx;
-      video.currentTime = (frameIdx - 1) / FPS;
+    // PRELOAD (folder 1 priority, then 2+3)
+    function loadFrame(i) {
+      const img = new Image();
+      img.onload = () => {
+        loaded++;
+        if (i === 1 && !firstFrameShown) { firstFrameShown = true; render(1); }
+        updateLoader();
+        if (loaded + errors === TOTAL) onReady();
+      };
+      img.onerror = () => {
+        errors++;
+        updateLoader();
+        if (loaded + errors === TOTAL) onReady();
+      };
+      img.src = framePath(i);
+      imgs[i] = img;
     }
 
-    video.addEventListener('seeked', drawVideoFrame);
+    function preload() {
+      for (let i = 1; i <= 121; i++) loadFrame(i);
+      setTimeout(() => { for (let i = 122; i <= TOTAL; i++) loadFrame(i); }, 80);
+    }
 
-    video.addEventListener('loadeddata', () => {
+    function updateLoader() {
+      const p = (loaded + errors) / TOTAL;
+      ldFill.style.width = (p * 100) + '%';
+      ldPct.textContent = Math.round(p * 100) + '%';
+    }
+
+    function onReady() {
       ready = true;
-      drawVideoFrame();
       onScroll();
-    });
+      setTimeout(() => loaderEl.classList.add('hidden'), 400);
+    }
 
     // SCROLL HELPERS
     function sectionProgress(el) {
@@ -3252,8 +3306,8 @@
     // SCROLL HANDLER
     function onScroll() {
       const pp = sectionProgress(fragToolsEl);
-      appCards.forEach((c, i) => c.classList.toggle('eliminated', pp > (i + 0.2) / 6));
-      onePlat.classList.toggle('visible', pp > 0.75);
+      appCards.forEach((c, i) => c.classList.toggle('eliminated', pp > (i + 0.5) / 6));
+      onePlat.classList.toggle('visible', pp > 0.88);
 
       const ep = sectionProgress(scrollEng);
 
@@ -3451,7 +3505,7 @@
 
     // INIT
     resize();
-    onScroll();
+    preload();
   </script>
 
   <!-- ── FUNNEL OVERLAY ── -->
