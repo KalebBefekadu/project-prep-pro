@@ -183,7 +183,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 24px 60px;
+      padding: 100px 24px 120px;
       overflow: hidden;
     }
 
@@ -349,6 +349,8 @@
       flex-direction: column;
       align-items: center;
       gap: 24px;
+      width: 100%;
+      max-width: 680px;
     }
 
     .hero-cta-social {
@@ -373,12 +375,12 @@
       display: flex;
       align-items: stretch;
       width: 100%;
-      max-width: 500px;
+      max-width: 680px;
     }
 
-    .hero-cta-input {
+    .hero-cta-name {
       flex: 1;
-      padding: 0 22px;
+      padding: 0 18px;
       height: 56px;
       background: var(--surface);
       border: 1.5px solid var(--bmd);
@@ -389,6 +391,26 @@
       outline: none;
       border-radius: 8px 0 0 8px;
       transition: border-color 0.2s;
+      min-width: 0;
+    }
+
+    .hero-cta-name:focus { border-color: var(--gold); }
+    .hero-cta-name::placeholder { color: var(--muted-lt); }
+
+    .hero-cta-input {
+      flex: 1;
+      padding: 0 18px;
+      height: 56px;
+      background: var(--surface);
+      border: 1.5px solid var(--bmd);
+      border-right: none;
+      color: var(--ink);
+      font-family: var(--f-b);
+      font-size: 0.9rem;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.2s;
+      min-width: 0;
     }
 
     .hero-cta-input:focus {
@@ -479,9 +501,11 @@
       display: flex;
     }
 
+    .mid-cta-name,
     .mid-cta-input {
-      width: 260px;
-      padding: 0 18px;
+      flex: 1;
+      min-width: 0;
+      padding: 0 16px;
       height: 50px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.14);
@@ -493,10 +517,12 @@
       transition: border-color 0.2s;
     }
 
+    .mid-cta-name:focus,
     .mid-cta-input:focus {
       border-color: rgba(184, 146, 31, 0.5);
     }
 
+    .mid-cta-name::placeholder,
     .mid-cta-input::placeholder {
       color: rgba(250, 250, 248, 0.25);
     }
@@ -528,10 +554,6 @@
 
     /* hero feature strip (replaces stats) */
     .hero-features {
-      position: absolute;
-      bottom: 110px;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
       align-items: stretch;
       gap: 8px;
@@ -541,6 +563,8 @@
       padding: 7px;
       white-space: nowrap;
       box-shadow: 0 4px 24px rgba(13, 11, 9, 0.08);
+      margin-top: 36px;
+      max-width: 100%;
     }
 
     .hf-item {
@@ -1853,6 +1877,7 @@
         width: 100%;
       }
 
+      .mid-cta-name,
       .mid-cta-input {
         flex: 1;
         width: auto;
@@ -1913,21 +1938,18 @@
         justify-content: center;
       }
 
-      /* tablet hero: features in flow, switch to top-aligned layout */
+      /* tablet hero */
       .hero-sticky {
-        justify-content: flex-start;
-        padding: 100px 24px 60px;
-        overflow-y: auto;
+        justify-content: center;
+        padding: 100px 24px 80px;
       }
 
       .hero-features {
         flex-wrap: wrap;
         white-space: normal;
-        position: static;
-        margin-top: 32px;
-        transform: none;
         width: 100%;
         justify-content: center;
+        margin-top: 32px;
       }
 
       .hero-stats-wrap {
@@ -1945,19 +1967,54 @@
 
     @media (max-width:700px) {
       .hero-sticky {
-        justify-content: flex-start;
-        padding: 115px 20px 48px;
-        overflow-y: auto;
+        justify-content: center;
+        padding: 100px 20px 80px;
       }
 
       .scroll-hint {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
-        bottom: 56px;
+        bottom: 24px;
+      }
+
+      .hero-cta-form {
+        flex-direction: column;
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .hero-cta-name,
+      .hero-cta-input {
+        border-right: 1.5px solid var(--bmd);
+        border-bottom: 1.5px solid var(--bmd);
+        border-radius: 8px;
+        height: 52px;
+        width: 100%;
+      }
+
+      .hero-cta-btn {
+        border-radius: 8px;
+        height: 52px;
+        width: 100%;
       }
 
       .hero-features {
+        display: flex;
+        flex-wrap: wrap;
+        white-space: normal;
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 28px;
+      }
+
+      .hf-item {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 130px;
+      }
+
+      .hf-sub {
         display: none;
       }
 
@@ -2080,15 +2137,17 @@
     }
 
     /* ── FINAL CTA — larger form + button ── */
-    .cta-form { max-width: 520px; margin: 0 auto; display: flex; gap: 8px; }
-    .cta-input { padding: 18px 20px; flex: 1; border: 1px solid var(--border); background: var(--surface); color: var(--ink); outline: none; transition: border-color 0.2s; font-family: var(--f-b); }
+    .cta-form { max-width: 700px; margin: 0 auto; display: flex; gap: 0; }
+    .cta-input { padding: 18px 16px; flex: 1; min-width: 0; border: 1px solid var(--border); border-right: none; background: var(--surface); color: var(--ink); outline: none; transition: border-color 0.2s; font-family: var(--f-b); font-size: 0.9rem; }
     .cta-input:focus { border-color: var(--gold); }
-    .cta-submit { padding: 18px 34px; font-size: 0.78rem; background: var(--gold); color: #fff; border: none; font-family: var(--f-b); font-weight: 700; text-transform: uppercase; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+    .cta-input::placeholder { color: var(--muted-lt); }
+    .cta-submit { padding: 18px 28px; font-size: 0.72rem; background: var(--gold); color: #fff; border: 1px solid var(--gold); font-family: var(--f-b); font-weight: 700; text-transform: uppercase; cursor: pointer; transition: background 0.2s; white-space: nowrap; letter-spacing: 0.08em; }
     .cta-submit:hover { background: var(--gold-lt); }
 
-    @media (max-width: 600px) {
-      .cta-form { flex-direction: column; gap: 12px; }
-      .cta-submit { width: 100%; justify-content: center; }
+    @media (max-width: 640px) {
+      .cta-form { flex-direction: column; gap: 10px; }
+      .cta-input { border-right: 1px solid var(--border); }
+      .cta-submit { width: 100%; padding: 16px; }
     }
 
     /* ── FUNNEL OVERLAY ── */
@@ -2205,6 +2264,32 @@
       line-height: 1; transition: color 0.2s;
     }
     .fs-close:hover { color: var(--ink); }
+    /* Stage 1 text inputs reuse fs-select styling */
+    .fs-text-input { margin-bottom: 16px; appearance: none; }
+    /* Context note under a label */
+    .fs-context {
+      font-size: 0.6rem; color: var(--muted); letter-spacing: 0.03em;
+      margin-top: -6px; margin-bottom: 14px; display: block; line-height: 1.6;
+      font-style: italic;
+    }
+    /* Helper text under field */
+    .fs-helper {
+      font-size: 0.6rem; color: var(--muted); letter-spacing: 0.03em;
+      margin-top: -22px; margin-bottom: 24px; display: block; line-height: 1.6;
+    }
+    /* Confirmation message banner */
+    .fs-confirm-msg {
+      font-size: 0.7rem; color: rgba(250,250,248,0.65); line-height: 1.7;
+      padding: 10px 14px; border: 1px solid rgba(184,146,31,0.25);
+      background: rgba(184,146,31,0.06); margin-bottom: 22px; display: block;
+    }
+    /* Referral perks list */
+    .fs-perks-list {
+      list-style: none; font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 0.04em; line-height: 2.1; margin-bottom: 24px;
+    }
+    .fs-perks-list li::before { content: '→ '; color: var(--gold); }
+    .fs-perks-list strong { color: rgba(250,250,248,0.85); }
     @media (max-width: 600px) {
       .fcard { padding: 36px 24px; }
       .fs-opts { grid-template-columns: 1fr; }
@@ -2244,7 +2329,8 @@
         <div class="hero-cta-form">
           <!-- Honeypot — hidden from humans, bots fill it -->
           <input type="text" name="website" id="hero-hp" style="display:none" tabindex="-1" autocomplete="off">
-          <input class="hero-cta-input" type="email" placeholder="Your professional email" id="hero-email">
+          <input class="hero-cta-name" type="text" placeholder="Your name" id="hero-name" autocomplete="name">
+          <input class="hero-cta-input" type="email" placeholder="Your professional email" id="hero-email" autocomplete="email">
           <button class="hero-cta-btn" onclick="handleHeroCTA()">Claim My Spot</button>
         </div>
         <div class="hero-cta-trust">
@@ -2398,7 +2484,7 @@
         <div class="who-cta">
           <p class="who-cta-text">Join first-time renovators already on the early access list. First cohort limited to Metro Atlanta.</p>
           <div style="display:flex; flex-direction:column; align-items:center;">
-            <button class="who-cta-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})" style="width:100%;">Join as a First-Time Renovator →</button>
+            <button class="who-cta-btn" onclick="openStage1()" style="width:100%;">Join as a First-Time Renovator →</button>
             <p style="font-size:0.55rem; color:var(--muted-lt); margin-top:8px; text-align:center;">No credit card required · Invites sent in monthly cohorts</p>
           </div>
         </div>
@@ -2463,7 +2549,7 @@
         <div class="who-cta">
           <p class="who-cta-text">First 200 investors lock in founding-member pricing. Metro Atlanta cohort now forming.</p>
           <div style="display:flex; flex-direction:column; align-items:center;">
-            <button class="who-cta-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})" style="width:100%;">Join as an Investor →</button>
+            <button class="who-cta-btn" onclick="openStage1()" style="width:100%;">Join as an Investor →</button>
             <p style="font-size:0.55rem; color:var(--muted-lt); margin-top:8px; text-align:center;">No credit card · Lifetime pricing locked at signup · 143 of 200 spots remaining</p>
           </div>
         </div>
@@ -2857,7 +2943,8 @@
     <div class="mid-cta-right">
       <div class="mid-cta-form">
         <input type="text" name="website" id="mid-hp" style="display:none" tabindex="-1" autocomplete="off">
-        <input class="mid-cta-input" type="email" placeholder="Your professional email" id="mid-email">
+        <input class="mid-cta-name" type="text" placeholder="Your name" id="mid-name" autocomplete="name">
+        <input class="mid-cta-input" type="email" placeholder="Professional email" id="mid-email" autocomplete="email">
         <button class="mid-cta-submit" onclick="handleMidCTA()">Claim My Spot</button>
       </div>
       <span class="mid-cta-note">No credit card · Invites sent in monthly cohorts</span>
@@ -3097,7 +3184,7 @@
         <div class="one-platform" id="one-platform">
           <div class="one-platform-name">Project Prep Pro</div>
           <div class="one-platform-sub">One unified operating system — every stage, every decision</div>
-          <button class="one-platform-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">Join →</button>
+          <button class="one-platform-btn" onclick="openStage1()">Join →</button>
         </div>
       </div>
     </div>
@@ -3110,7 +3197,7 @@
         <span class="platform-cta-eyebrow">Stop juggling. Start building.</span>
         <h3 class="platform-cta-h3">One platform.<br><em>Every stage covered.</em></h3>
       </div>
-      <button class="platform-cta-btn" onclick="document.getElementById('final-cta').scrollIntoView({behavior:'smooth'})">
+      <button class="platform-cta-btn" onclick="openStage1()">
         Join the Waitlist
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="15" height="15"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
@@ -3124,7 +3211,8 @@
     <p class="cta-p">Join the waitlist for early access. First investors shape the product — and lock in lifetime pricing before public launch.</p>
     <div class="cta-form">
       <input type="text" name="website" id="final-hp" style="display:none" tabindex="-1" autocomplete="off">
-      <input class="cta-input" type="email" placeholder="Your professional email" id="cta-email">
+      <input class="cta-input" type="text" placeholder="Your name" id="cta-name" autocomplete="name">
+      <input class="cta-input" type="email" placeholder="Your professional email" id="cta-email" autocomplete="email">
       <button class="cta-submit" onclick="handleCTA()">Claim My Spot →</button>
     </div>
     <p class="cta-note">No credit card required · Private beta launching in Metro Atlanta · 200 spots total</p>
@@ -3296,12 +3384,67 @@
     }
 
     // ── FUNNEL STATE ──────────────────────────────────────────────────────────
-    let _fEmail = '', _fRefUrl = '', _fRefCode = '', _fDeals = '';
+    let _fEmail = '', _fName = '', _fRefUrl = '', _fRefCode = '', _fDeals = '';
 
-    // ── SUBMIT EMAIL → open funnel ────────────────────────────────────────────
-    function submitEmail(emailId, btnEl) {
-      const email = document.getElementById(emailId).value.trim();
+    // ── STAGE 1: Name + Email capture (button-only CTAs) ─────────────────────
+    function openStage1() {
+      document.getElementById('fs1-name').value = '';
+      document.getElementById('fs1-email').value = '';
+      const btn = document.getElementById('fs1-btn');
+      btn.textContent = 'Claim My Spot →';
+      btn.disabled = false;
+      showFStage(1);
+      document.getElementById('funnel-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function submitStage1() {
+      const name  = document.getElementById('fs1-name').value.trim();
+      const email = document.getElementById('fs1-email').value.trim();
       const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!name) {
+        const el = document.getElementById('fs1-name');
+        el.style.borderColor = '#dc2626';
+        setTimeout(() => el.style.borderColor = '', 1400);
+        return;
+      }
+      if (!emailRe.test(email)) {
+        const el = document.getElementById('fs1-email');
+        el.style.borderColor = '#dc2626';
+        setTimeout(() => el.style.borderColor = '', 1400);
+        return;
+      }
+      _fName  = name;
+      _fEmail = email;
+      const btn = document.getElementById('fs1-btn');
+      btn.textContent = 'Joining…';
+      btn.disabled = true;
+      const refParam = new URLSearchParams(location.search).get('ref') || '';
+      fetch('/api/waitlist', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, referredBy: refParam, website: '' }),
+      })
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) { btn.textContent = 'Try Again'; btn.disabled = false; return; }
+          _fRefUrl  = data.referralUrl  || location.origin;
+          _fRefCode = data.referralCode || '';
+          openFunnel(data.spotNumber || 1);
+        })
+        .catch(() => { _fRefUrl = location.origin; _fRefCode = 'DEMO'; openFunnel(47); });
+    }
+
+    // ── SUBMIT EMAIL → open funnel (CTAs with email field) ───────────────────
+    function submitEmail(emailId, nameId, btnEl) {
+      const email   = document.getElementById(emailId).value.trim();
+      const nameEl  = nameId ? document.getElementById(nameId) : null;
+      const name    = nameEl ? nameEl.value.trim() : '';
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (nameEl && !name) {
+        nameEl.style.borderColor = '#dc2626';
+        setTimeout(() => nameEl.style.borderColor = '', 1400);
+        return;
+      }
       if (!emailRe.test(email)) {
         const inp = document.getElementById(emailId);
         inp.style.borderColor = '#dc2626';
@@ -3309,6 +3452,7 @@
         return;
       }
       _fEmail = email;
+      _fName  = name;
       btnEl.textContent = 'Joining…';
       btnEl.disabled = true;
 
@@ -3320,7 +3464,7 @@
       fetch('/api/waitlist', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ email, referredBy: refParam, website: honeypot }),
+        body:    JSON.stringify({ email, name, referredBy: refParam, website: honeypot }),
       })
         .then(r => r.json())
         .then(data => {
@@ -3341,9 +3485,9 @@
         });
     }
 
-    function handleHeroCTA() { submitEmail('hero-email', document.querySelector('.hero-cta-btn')); }
-    function handleMidCTA()  { submitEmail('mid-email',  document.querySelector('.mid-cta-submit')); }
-    function handleCTA()     { submitEmail('cta-email',  document.querySelector('.cta-submit')); }
+    function handleHeroCTA() { submitEmail('hero-email', 'hero-name', document.querySelector('.hero-cta-btn')); }
+    function handleMidCTA()  { submitEmail('mid-email',  'mid-name',  document.querySelector('.mid-cta-submit')); }
+    function handleCTA()     { submitEmail('cta-email',  'cta-name',  document.querySelector('.cta-submit')); }
 
     // ── FUNNEL OVERLAY CONTROLS ───────────────────────────────────────────────
     function openFunnel(spotNum) {
@@ -3394,13 +3538,14 @@
 
     function submitAdvisor() {
       const bottleneck = document.getElementById('fs-bottleneck').value.trim();
+      const phone      = (document.getElementById('fs-phone') || {}).value || '';
       const btn = document.querySelector('#fs-3 .fs-btn');
       btn.textContent = 'Submitting…';
       btn.disabled = true;
       fetch('/api/waitlist', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ email: _fEmail, deals: _fDeals, bottleneck, website: '' }),
+        body:    JSON.stringify({ email: _fEmail, name: _fName, deals: _fDeals, bottleneck, phone: phone.trim(), website: '' }),
       })
         .catch(() => {})
         .finally(() => advanceFunnel(4));
@@ -3459,6 +3604,20 @@
     <div class="fcard">
       <button class="fs-close" onclick="closeFunnel()" aria-label="Close">&times;</button>
 
+      <!-- Stage 1: Name + Email capture (for button-only CTAs) -->
+      <div class="fstage" id="fs-1">
+        <span class="fs-eyebrow">Project Prep Pro &nbsp;·&nbsp; Metro Atlanta</span>
+        <div class="fs-spot" style="font-size:clamp(1.6rem,3.5vw,2.4rem);margin-bottom:10px">Join the early access list.</div>
+        <p class="fs-sub">200+ investors &amp; homeowners already on the waitlist. No credit card required.</p>
+        <label class="fs-label" for="fs1-name">Full Name</label>
+        <input class="fs-select fs-text-input" type="text" id="fs1-name" placeholder="Your full name" autocomplete="name">
+        <label class="fs-label" for="fs1-email">Professional Email</label>
+        <input class="fs-select fs-text-input" type="email" id="fs1-email" placeholder="you@company.com" autocomplete="email" style="margin-bottom:28px">
+        <div class="fs-btn-row">
+          <button class="fs-btn" id="fs1-btn" onclick="submitStage1()">Claim My Spot →</button>
+        </div>
+      </div>
+
       <!-- Stage 2: Confirmation + identity -->
       <div class="fstage" id="fs-2">
         <span class="fs-eyebrow">Project Prep Pro &nbsp;·&nbsp; Metro Atlanta</span>
@@ -3480,12 +3639,13 @@
         </div>
       </div>
 
-      <!-- Stage 3: Shape the product / Advisor application -->
+      <!-- Stage 3: Shape the product -->
       <div class="fstage" id="fs-3">
         <span class="fs-eyebrow">Optional &nbsp;·&nbsp; 2 more questions</span>
-        <div class="fs-spot" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:10px">Want to directly influence what gets built?</div>
-        <p class="fs-sub">We're selecting 20 advisors from the first cohort to give direct feedback. Answer two questions to be considered.</p>
+        <div class="fs-spot" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:10px">Help us build what you need.</div>
+        <p class="fs-sub">Answer two quick questions so we can tailor your experience and connect you with the right people.</p>
         <label class="fs-label">How many deals do you close per year?</label>
+        <span class="fs-context">This helps us tailor your setup and we'll match you with similar investors in early access.</span>
         <div class="fs-opts">
           <button class="fs-opt-btn" onclick="selectDeals('1-5', this)">1 – 5</button>
           <button class="fs-opt-btn" onclick="selectDeals('6-15', this)">6 – 15</button>
@@ -3494,17 +3654,21 @@
         </div>
         <label class="fs-label" for="fs-bottleneck">What's your biggest bottleneck right now?</label>
         <textarea class="fs-textarea" id="fs-bottleneck" placeholder="E.g. tracking multiple contractors, deal analysis takes too long…"></textarea>
+        <label class="fs-label" for="fs-phone">Phone <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input class="fs-select fs-text-input" type="tel" id="fs-phone" placeholder="+1 (555) 000-0000" autocomplete="tel" style="margin-bottom:8px">
+        <span class="fs-helper">We'll text you when your invite is ready — no spam, no sales calls.</span>
         <div class="fs-btn-row">
-          <button class="fs-btn" onclick="submitAdvisor()">Submit &amp; Apply for Advisor Access →</button>
+          <button class="fs-btn" onclick="submitAdvisor()">Submit &amp; Continue →</button>
           <button class="fs-skip" onclick="advanceFunnel(4)">Skip — I'm already on the list</button>
         </div>
       </div>
 
       <!-- Stage 4: Social amplifier -->
       <div class="fstage" id="fs-4">
-        <span class="fs-eyebrow">You're confirmed</span>
+        <span class="fs-eyebrow">You're on the list &nbsp;·&nbsp; Check your inbox</span>
         <div class="fs-spot" style="font-size:clamp(1.4rem,3vw,2rem);margin-bottom:10px">Move up the list.</div>
-        <p class="fs-sub">Share your link. Every professional who signs up through you moves you closer to the front of the first cohort.</p>
+        <span class="fs-confirm-msg">We'll email you the moment your access is ready. No spam — just your invite when the cohort opens.</span>
+        <p class="fs-sub" style="margin-bottom:18px">Every investor who joins through your link bumps you closer to the front and gives you both access to our private founding member group. No spam. Just early access with people who actually close deals.</p>
         <div class="fs-ref-box">
           <input class="fs-ref-input" id="fs-ref-input" readonly>
           <button class="fs-copy-btn" onclick="copyRef()">Copy</button>
@@ -3519,7 +3683,10 @@
             Text a Contact
           </a>
         </div>
-        <p class="fs-perks"><strong>2 referrals</strong> = Priority Access &nbsp;·&nbsp; <strong>5 referrals</strong> = Founding Member status</p>
+        <ul class="fs-perks-list">
+          <li><strong>2 referrals</strong> = Priority Access + private Slack</li>
+          <li><strong>5 referrals</strong> = Founding Member status — locked pricing, access to deals, direct line to our team</li>
+        </ul>
         <div class="fs-btn-row">
           <button class="fs-btn" onclick="closeFunnel()">Done — Take Me Back</button>
         </div>
