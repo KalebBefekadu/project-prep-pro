@@ -150,19 +150,14 @@ module.exports = async function handler(req, res) {
         }),
       });
       const resendBody = await resendRes.json();
-      debugResend = resendBody;
       console.log('Resend response:', resendRes.status, JSON.stringify(resendBody));
     } catch (e) {
-      debugResend = { error: String(e) };
       console.error('Resend error:', e);
     }
-  } else {
-    debugResend = { skipped: true, hasKey: !!RESEND_KEY, isNewUser };
   }
 
   return res.status(200).json({
     ok:           true,
-    debugResend,
     spotNumber,
     referralCode: refCode,
     referralUrl:  `${SITE_URL}?ref=${refCode}`,
