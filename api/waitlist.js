@@ -140,6 +140,7 @@ module.exports = async function handler(req, res) {
                 <li style="margin-bottom:8px;"><strong>2 referrals</strong> = Priority Access + private Slack</li>
                 <li><strong>5 referrals</strong> = Founding Member status &mdash; locked pricing, access to deals, direct line to our team</li>
               </ul>
+              <p style="color:#333;font-weight:600;margin:0 0 8px">Use your personal link below to share with others:</p>
               <div style="background:#1a1a14;padding:16px 20px;margin:0 0 0px;font-family:monospace;font-size:0.85rem;color:#b8921f;word-break:break-all">
                 ${SITE_URL}?ref=${refCode}
               </div>
