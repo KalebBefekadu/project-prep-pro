@@ -601,7 +601,7 @@
       .six-grid-dark { grid-template-columns:repeat(2,1fr); }
       .pb-features { grid-template-columns:1fr; }
       footer { padding:40px 24px; }
-      .scroll-hint { right:auto; left:50%; transform:translateX(-50%); bottom:24px; }
+      .scroll-hint { display:none; }
     }
     @media (max-width:768px) {
       #who-is-this { padding:80px 32px 100px; }
@@ -629,6 +629,7 @@
       #stage-label { bottom:auto; top:16px; left:20px; }
       /* Fix shade conflicts on mobile */
       .cv-fade-bottom { display:none; }
+      .hide-mobile { display:none; }
       .vignette {
         background:
           linear-gradient(to bottom, rgba(13,11,9,0.25) 0%, transparent 18%),
@@ -751,7 +752,7 @@
     </h1>
 
     <p class="hero-sub">
-      The first truly comprehensive real estate investment platform. From AI-driven deal underwriting and precise 3D prototyping, to intelligent contractor bidding, permitting, and construction oversight. The complete investment lifecycle, finally unified.
+      The first truly comprehensive real estate investment platform.<span class="hide-mobile"> From AI-driven deal underwriting and precise 3D prototyping, to intelligent contractor bidding, permitting, and construction oversight. The complete investment lifecycle, finally unified.</span>
     </p>
 
     <div class="hero-cta">
