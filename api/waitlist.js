@@ -118,7 +118,7 @@ module.exports = async function handler(req, res) {
 
   // ── Resend confirmation email ────────────────────────────────────────────────
   console.log('Resend check — key present:', !!RESEND_KEY, '| isNewUser:', isNewUser);
-  if (RESEND_KEY) {
+  if (RESEND_KEY && isNewUser) {
     try {
       const resendRes = await fetch('https://api.resend.com/emails', {
         method:  'POST',
