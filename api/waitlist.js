@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(204).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { email, role, deals, bottleneck, referredBy, website } = req.body || {};
+  const { email, name, role, deals, bottleneck, phone, referredBy, website } = req.body || {};
 
   // Honeypot — bots fill the hidden "website" field; humans don't
   if (website) return res.status(200).json({ ok: true });
@@ -53,9 +53,11 @@ module.exports = async function handler(req, res) {
         
         // Patch only defined fields so we don't overwrite with nulls
         const updatePayload = {};
+        if (name) updatePayload.name = name;
         if (role) updatePayload.role = role;
         if (deals) updatePayload.deals = deals;
         if (bottleneck) updatePayload.bottleneck = bottleneck;
+        if (phone) updatePayload.phone = phone;
         
         if (Object.keys(updatePayload).length > 0) {
           await fetch(`${SUPABASE_URL}/rest/v1/waitlist?email=eq.${encodeURIComponent(email)}`, {
@@ -80,11 +82,14 @@ module.exports = async function handler(req, res) {
           },
           body: JSON.stringify({
             email,
+            name:          name        || null,
             role:          role        || null,
             deals:         deals       || null,
             bottleneck:    bottleneck  || null,
+            phone:         phone       || null,
             referral_code: refCode,
             referred_by:   referredBy  || null,
+            referral_url:  `${SITE_URL}?ref=${refCode}`,
           }),
         });
       }
