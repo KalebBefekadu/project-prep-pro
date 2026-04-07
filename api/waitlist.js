@@ -135,15 +135,14 @@ module.exports = async function handler(req, res) {
               <p style="font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#b8921f;margin:0 0 24px">Veltro &nbsp;·&nbsp; Metro Atlanta</p>
               <h1 style="font-size:2rem;font-weight:300;margin:0 0 8px;line-height:1.1">You're in.</h1>
               <p style="font-size:1.1rem;color:#b8921f;font-weight:600;margin:0 0 24px">Spot #${spotNumber} secured.</p>
-              <p style="color:#555;line-height:1.7;margin:0 0 32px">We'll send your invite the moment the first Metro Atlanta cohort opens. You'll be among the first 200 professionals to shape the platform.</p>
-              <p style="color:#333;font-weight:600;margin:0 0 8px">Move up the list &mdash;</p>
-              <p style="color:#555;line-height:1.7;margin:0 0 16px">Share your referral link. Every professional who signs up through you moves you closer to the front of the cohort.</p>
-              <div style="background:#1a1a14;padding:16px 20px;margin:0 0 8px;font-family:monospace;font-size:0.85rem;color:#b8921f;word-break:break-all">
+              <p style="color:#555;line-height:1.7;margin:0 0 32px">Welcome! We'll send your invite the moment the first Metro Atlanta cohort opens. You'll be among the first to shape the platform.</p>
+              <ul style="color:#555;line-height:1.7;margin:0 0 16px;padding-left:20px;">
+                <li style="margin-bottom:8px;"><strong>2 referrals</strong> = Priority Access + private Slack</li>
+                <li><strong>5 referrals</strong> = Founding Member status &mdash; locked pricing, access to deals, direct line to our team</li>
+              </ul>
+              <div style="background:#1a1a14;padding:16px 20px;margin:0 0 0px;font-family:monospace;font-size:0.85rem;color:#b8921f;word-break:break-all">
                 ${SITE_URL}?ref=${refCode}
               </div>
-              <p style="font-size:0.78rem;color:#999;margin:0 0 32px">2 referrals = Priority Access &nbsp;·&nbsp; 5 referrals = Founding Member status</p>
-              <hr style="border:none;border-top:1px solid #e8e0d0;margin:0 0 24px">
-              <p style="font-size:0.72rem;color:#bbb;margin:0">You're receiving this because you joined the Veltro waitlist. Reply to unsubscribe.</p>
             </div>
           `,
         }),
