@@ -127,12 +127,12 @@ module.exports = async function handler(req, res) {
           'Authorization': `Bearer ${RESEND_KEY}`,
         },
         body: JSON.stringify({
-          from:    'Project Prep Pro <onboarding@resend.dev>',
+          from:    'Veltro <onboarding@useveltro.com>',
           to:      [email],
           subject: `You're in — Spot #${spotNumber} secured`,
           html: `
             <div style="font-family:Georgia,serif;max-width:520px;margin:40px auto;color:#0d0b09;background:#faf9f7;padding:40px;border:1px solid #e8e0d0">
-              <p style="font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#b8921f;margin:0 0 24px">Project Prep Pro &nbsp;·&nbsp; Metro Atlanta</p>
+              <p style="font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;color:#b8921f;margin:0 0 24px">Veltro &nbsp;·&nbsp; Metro Atlanta</p>
               <h1 style="font-size:2rem;font-weight:300;margin:0 0 8px;line-height:1.1">You're in.</h1>
               <p style="font-size:1.1rem;color:#b8921f;font-weight:600;margin:0 0 24px">Spot #${spotNumber} secured.</p>
               <p style="color:#555;line-height:1.7;margin:0 0 32px">We'll send your invite the moment the first Metro Atlanta cohort opens. You'll be among the first 200 professionals to shape the platform.</p>
@@ -143,7 +143,7 @@ module.exports = async function handler(req, res) {
               </div>
               <p style="font-size:0.78rem;color:#999;margin:0 0 32px">2 referrals = Priority Access &nbsp;·&nbsp; 5 referrals = Founding Member status</p>
               <hr style="border:none;border-top:1px solid #e8e0d0;margin:0 0 24px">
-              <p style="font-size:0.72rem;color:#bbb;margin:0">You're receiving this because you joined the Project Prep Pro waitlist. Reply to unsubscribe.</p>
+              <p style="font-size:0.72rem;color:#bbb;margin:0">You're receiving this because you joined the Veltro waitlist. Reply to unsubscribe.</p>
             </div>
           `,
         }),
